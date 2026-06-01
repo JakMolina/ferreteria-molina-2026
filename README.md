@@ -4,7 +4,6 @@ Sistema de escritorio avanzado para la gestión integral de inventario, facturac
 
 ## Características Principales
 
-* **Control de Acceso Estricto (RBAC):** Sistema de roles (Gerente, Administrador, Cajero) con protección de rutas, permisos escalonados y middleware de validación.
 * **Gestión de Inventario:** Control de productos, alertas de stock mínimo automático y directorio de proveedores.
 * **Punto de Venta (POS):** Módulo de ventas optimizado con cálculo de totales y generación de tickets.
 * **Dashboard Analítico:** Visualización de métricas clave, gráficos de tendencias de ventas y alertas operativas en tiempo real.
