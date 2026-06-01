@@ -44,7 +44,8 @@
   },
   "dependencies": {
     "better-sqlite3": "^11.10.0",
-    "electron-log": "^5.0.0"
+    "electron-log": "^5.0.0",
+    "fs-extra": "^11.3.5"
   },
   "devDependencies": {
     "electron": "^30.0.0",
