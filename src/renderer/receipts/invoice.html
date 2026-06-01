@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comprobante</title>
+    <style>
+        body { font-family: 'Courier New', Courier, monospace; width: 100%; max-width: 300px; margin: 0 auto; padding: 10px; }
+        .text-center { text-align: center; }
+        .divider { border-top: 1px dashed #000; margin: 10px 0; }
+        .item-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .total { font-weight: bold; font-size: 1.2em; text-align: right; margin-top: 10px; }
+
+        #receipt-content { display: none; }
+        .visible { display: block !important; }
+    </style>
+</head>
+<body>
+    <div id="receipt-content">
+        <div class="text-center">
+            <h3>FERRETERÍA MOLINA</h3>
+            <p>RUC: 10123456789</p>
+        </div>
+        <div class="divider"></div>
+        <div id="sale-info"></div>
+        <div class="divider"></div>
+        <div id="items-list"></div>
+        <div class="divider"></div>
+        <div class="total" id="total-amount"></div>
+    </div>
+
+    <script>
+        window.loadInvoiceData = (sale) => {
+            try {
+                if (!sale) return;
+
+                const client = JSON.parse(sale.client_json || '{}');
+
+                document.getElementById('sale-info').innerHTML = `
+                    <b>Folio:</b> ${sale.invoice_number}<br>
+                    <b>Fecha:</b> ${new Date(sale.created_at).toLocaleString()}<br>
+                    <b>Cliente:</b> ${client.name || 'General'}<br>
+                    <b>DOC:</b> ${client.docNumber || '-'}
+                `;
+
+                let htmlItems = '';
+                sale.items.forEach(item => {
+                    htmlItems += `
+                        <div class="item-row">
+                            <span>${item.quantity} x ${item.product_name}</span>
+                            <span>${item.subtotal.toFixed(2)}</span>
+                        </div>`;
+                });
+                
+                document.getElementById('items-list').innerHTML = htmlItems;
+                document.getElementById('total-amount').textContent = `Total: S/ ${sale.total.toFixed(2)}`;
+
+                document.getElementById('receipt-content').classList.add('visible');
+
+                return "OK";
+            } catch (err) {
+                document.body.innerHTML = "Error rendering: " + err.message;
+            }
+        };
+    </script>
+</body>
+</html>

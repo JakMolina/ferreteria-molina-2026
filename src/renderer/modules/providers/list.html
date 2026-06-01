@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Proveedores - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="../sales/daily.html">🧾 Ventas</a>
+                <a href="list.html" class="active">👥 Proveedores</a>
+                <a href="../users/list.html">👤 Usuarios</a>
+                <a href="../sales/history.html">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1>Proveedores</h1>
+                    <p>Socios comerciales</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="search-bar">
+                        <span>🔍</span>
+                        <input id="searchProvider" placeholder="Buscar proveedor...">
+                    </div>
+                    <a href="form.html" class="btn btn-primary">+ Nuevo</a>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-wrap">
+                    <table class="app-table" id="tblProviders">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Empresa / Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="loading" class="text-center text-muted" style="padding:20px;">Cargando datos...</div>
+            </div>
+        </main>
+    </div>
+    <script src="./list.js"></script>
+</body>
+</html>

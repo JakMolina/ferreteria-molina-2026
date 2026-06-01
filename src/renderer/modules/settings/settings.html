@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Configuración - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="../sales/daily.html">🧾 Ventas</a>
+                <a href="../providers/list.html">👥 Proveedores</a>
+                <a href="../users/list.html">👤 Usuarios</a>
+                <a href="../sales/history.html">📊 Historial</a>
+                <a href="settings.html" class="active">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1>Configuración</h1>
+                    <p>Ajustes generales</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+                <div class="card">
+                    <h3 class="font-bold text-muted mb-4">🏢 Datos para Facturación</h3>
+                    <form id="settingsForm" class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre Empresa</label>
+                            <input id="companyName" type="text" placeholder="Ferretería Molina">
+                        </div>
+                        <div class="form-group">
+                            <label>RUC</label>
+                            <input id="companyRuc" type="text" maxlength="11">
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección Fiscal</label>
+                            <input id="companyAddress" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input id="companyPhone" type="text">
+                        </div>
+                        <div class="form-group" style="grid-column: 1/-1;">
+                            <label>Mensaje Ticket</label>
+                            <input id="ticketFooter" type="text" placeholder="Gracias por su compra">
+                        </div>
+                        <div class="flex justify-end mt-4" style="grid-column: 1/-1;">
+                            <button type="submit" id="btnSave" class="btn btn-primary">💾 Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="card bg-slate-50">
+                        <h3 class="font-bold text-muted mb-2">🛡️ Seguridad</h3>
+                        <p class="text-muted text-sm mb-4">Descarga una copia completa de tu base de datos.</p>
+                        <button id="btnBackup" class="btn btn-ghost border-blue w-full">📥 Descargar Backup</button>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="font-bold text-muted mb-2">ℹ️ Sistema</h3>
+                        <ul style="font-size: 13px; color: var(--text-muted); list-style:none;">
+                            <li class="flex justify-between py-1 border-b"><span>Versión:</span> <strong>1.1.1</strong></li>
+                            <li class="flex justify-between py-1 border-b"><span>Estado DB:</span> <strong class="text-success">Conectada</strong></li>
+                            <li class="flex justify-between py-1"><span>Licencia:</span> <strong>Propietario</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./settings.js"></script>
+</body>
+</html>

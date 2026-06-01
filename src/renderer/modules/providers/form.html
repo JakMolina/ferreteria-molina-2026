@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Proveedor - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="../sales/daily.html">🧾 Ventas</a>
+                <a href="list.html" class="active">👥 Proveedores</a>
+                <a href="../users/list.html">👤 Usuarios</a>
+                <a href="../sales/history.html">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1 id="formTitle">Proveedor</h1>
+                    <p class="text-muted">Datos de contacto</p>
+                </div>
+            </div>
+
+            <div class="card" style="max-width: 700px; margin: 0 auto;">
+                <form id="providerForm" class="form-grid">
+                    <div class="form-group" style="grid-column: 1/-1;">
+                        <label>Nombre Empresa / Contacto *</label>
+                        <input id="name" type="text" required placeholder="Ej. Distribuidora Aceros" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input id="phone" type="text" placeholder="Ej. 999-999-999">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input id="email" type="email" placeholder="contacto@empresa.com">
+                    </div>
+                    <div class="form-group" style="grid-column: 1/-1;">
+                        <label>Dirección</label>
+                        <input id="address" type="text" placeholder="Av. Principal 123">
+                    </div>
+
+                    <div class="flex justify-end gap-2 mt-4" style="grid-column: 1/-1;">
+                        <a href="list.html" class="btn btn-ghost">Cancelar</a>
+                        <button type="submit" id="saveBtn" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="./form.js"></script>
+</body>
+</html>

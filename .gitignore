@@ -1,0 +1,25 @@
+# Dependencias de Node
+node_modules/
+
+# Carpetas de compilación e instaladores
+dist/
+build/
+out/
+
+# Bases de datos locales y temporales
+dev-data/
+*.db
+*.db-wal
+*.db-shm
+
+# Archivos de entorno y logs
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

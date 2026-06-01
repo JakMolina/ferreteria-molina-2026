@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Historial - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="pos.html">🧾 Ventas</a>
+                <a href="../providers/list.html">👥 Proveedores</a>
+                <a href="../users/list.html">👤 Usuarios</a>
+                <a href="history.html" class="active">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1>Historial de Ventas</h1>
+                    <p>Registro de transacciones</p>
+                </div>
+                <a href="pos.html" class="btn btn-primary">+ Nueva Venta</a>
+            </div>
+
+            <div class="card mb-4">
+                <div class="flex items-center gap-4">
+                    <span class="font-bold text-muted">Filtrar Mes:</span>
+                    <input type="month" id="monthFilter" style="width: auto;">
+                    <button id="btnFilter" class="btn btn-ghost border-blue">Filtrar</button>
+                    <button id="btnClear" class="btn btn-ghost">Ver Todo</button>
+                    
+                    <div class="w-full text-right">
+                        <span class="text-muted">Total Vista:</span>
+                        <span id="totalView" class="font-bold text-primary" style="font-size: 1.2rem;">S/ 0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-wrap">
+                    <table class="app-table" id="salesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha / Hora</th>
+                                <th>Detalle</th>
+                                <th>Total</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesBody"></tbody>
+                    </table>
+                </div>
+                <div id="loading" class="text-center text-muted" style="padding:20px;">Cargando historial...</div>
+            </div>
+        </main>
+    </div>
+    <script src="./history.js"></script>
+</body>
+</html>

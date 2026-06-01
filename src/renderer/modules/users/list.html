@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Usuarios - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="../sales/daily.html">🧾 Ventas</a>
+                <a href="../providers/list.html">👥 Proveedores</a>
+                <a href="list.html" class="active">👤 Usuarios</a>
+                <a href="../sales/history.html">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1>Usuarios</h1>
+                    <p>Control de acceso</p>
+                </div>
+                <a href="form.html" class="btn btn-primary">+ Nuevo Usuario</a>
+            </div>
+
+            <div class="table-container">
+                <table class="app-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th class="text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody"></tbody>
+                </table>
+                <div id="loading" class="text-center text-muted" style="padding:20px;">Cargando...</div>
+            </div>
+        </main>
+    </div>
+    <script src="./list.js"></script>
+</body>
+</html>

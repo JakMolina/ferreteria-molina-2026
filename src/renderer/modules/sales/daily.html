@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Ventas del Día - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+    <style>
+        .hero-action {
+            background: linear-gradient(135deg, var(--primary), var(--accent-strong));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .hero-action:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .hero-icon { font-size: 3rem; background: rgba(255,255,255,0.2); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .hero-text h2 { margin: 0; font-size: 1.5rem; }
+        .hero-text p { margin: 5px 0 0 0; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="daily.html" class="active">🧾 Ventas</a> 
+                <a href="../providers/list.html">👥 Proveedores</a>
+                <a href="../users/list.html">👤 Usuarios</a>
+                <a href="history.html">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout" onclick="sessionStorage.clear()">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1>Gestión de Ventas</h1>
+                    <p id="dateDisplay">Resumen de operaciones de hoy</p>
+                </div>
+            </div>
+
+            <a href="pos.html" class="hero-action">
+                <div class="hero-text">
+                    <h2 class="font-bold text-muted">+ Nueva Venta</h2>
+                    <p class="font-bold text-muted">Abrir caja registradora para cobrar</p>
+                </div>
+                <div class="hero-icon">🛒</div>
+            </a>
+
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-muted">Movimientos de Hoy (Se limpian mañana)</h3>
+                    <div class="text-right">
+                        <span class="text-muted">Total Hoy:</span>
+                        <span id="totalDay" class="font-bold text-success" style="font-size: 1.2rem;">S/ 0.00</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-wrap">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Hora</th>
+                                    <th>Productos</th>
+                                    <th>Vendedor</th>
+                                    <th>Total</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dailyBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="loading" class="text-center text-muted" style="padding:20px;">Cargando ventas del día...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./daily.js"></script>
+</body>
+</html>

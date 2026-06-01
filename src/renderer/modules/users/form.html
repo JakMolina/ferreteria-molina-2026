@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Usuario - Ferretería Molina</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand"><div class="logo">FM</div><h2>Ferretería Molina</h2></div>
+            <nav class="menu">
+                <a href="../home/index.html">🏠 Inicio</a>
+                <a href="../products/list.html">📦 Productos</a>
+                <a href="../sales/daily.html">🧾 Ventas</a>
+                <a href="../providers/list.html">👥 Proveedores</a>
+                <a href="list.html" class="active">👤 Usuarios</a>
+                <a href="../sales/history.html">📊 Historial</a>
+                <a href="../settings/settings.html">⚙ Configuración</a>
+                <a href="../auth/login.html" class="btn-logout">🔓 Salir</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="header">
+                <div class="title">
+                    <h1 id="pageTitle">Usuario</h1>
+                    <p class="text-muted">Credenciales de acceso</p>
+                </div>
+            </div>
+
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form id="userForm" class="form-grid">
+                    <div class="form-group" style="grid-column: 1/-1;">
+                        <label>Nombre Completo</label>
+                        <input id="fullname" type="text" placeholder="Ej. Juan Pérez" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Rol</label>
+                        <select id="role">
+                            <option value="cashier">Cajero</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Usuario (Login)</label>
+                        <input id="username" type="text" placeholder="Ej. jperez" required>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1/-1;">
+                        <label id="lblPassword">Contraseña</label>
+                        <input id="password" type="password" placeholder="••••••">
+                        <small id="pwdHelp" class="text-muted hidden">Dejar en blanco para mantener la actual.</small>
+                    </div>
+
+                    <div class="flex justify-end gap-2 mt-4" style="grid-column: 1/-1;">
+                        <a href="list.html" class="btn btn-ghost">Cancelar</a>
+                        <button type="submit" id="btnSave" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="./form.js"></script>
+</body>
+</html>
