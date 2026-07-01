@@ -23,3 +23,7 @@ logs/
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db
+
+# Archivos de configuración de IA que contienen secretos
+opencode.json
+ESTRUCTURA_PROYECTO.md
