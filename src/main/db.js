@@ -271,7 +271,7 @@ function migrateToV2() {
             db.exec("ALTER TABLE users ADD COLUMN password_hash TEXT");
         }
         if (!userCols.includes('role_id')) {
-            db.exec("ALTER TABLE users ADD COLUMN role_id INTEGER DEFAULT 2 REFERENCES roles(id)");
+            db.exec("ALTER TABLE users ADD COLUMN role_id INTEGER DEFAULT 2");
         }
         if (!userCols.includes('last_login')) {
             db.exec("ALTER TABLE users ADD COLUMN last_login TEXT");
