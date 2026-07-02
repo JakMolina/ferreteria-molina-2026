@@ -40,7 +40,8 @@ async function handleLogin(e) {
         if (result.success) {
             btnLogin.textContent = "Ingresando...";
             sessionStorage.setItem('user', JSON.stringify(result.user));
-            
+            sessionStorage.setItem('permissions', JSON.stringify(result.user.permissions));
+
             console.log("Navegando a Home...");
             await window.api.navigation.goTo("home/index.html");
             

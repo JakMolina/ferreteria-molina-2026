@@ -2,12 +2,13 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 const api = {
     app: {
-        getPath: () => ipcRenderer.invoke('app:getPath'), // Para saber ruta base (necesario para boleta HTML)
-        openFile: (path) => ipcRenderer.invoke('app:open-file', path) // Para abrir el PDF generado
+        getPath: () => ipcRenderer.invoke('app:getPath'),
+        openFile: (path) => ipcRenderer.invoke('app:open-file', path)
     },
 
     auth: {
-        login: (creds) => ipcRenderer.invoke('login', creds)
+        login: (creds) => ipcRenderer.invoke('login', creds),
+        getPermissions: (userId) => ipcRenderer.invoke('auth:permissions', userId)
     },
 
     navigation: {
@@ -18,16 +19,16 @@ const api = {
         getAll: (query) => ipcRenderer.invoke('products:get-all', query),
         list: () => ipcRenderer.invoke('product:list'),
         create: (data) => ipcRenderer.invoke('product:create', data),
-        update: (id, data) => ipcRenderer.invoke('product:update', { id, data }),
-        delete: (id) => ipcRenderer.invoke('product:delete', id)
+        update: (id, data, userId) => ipcRenderer.invoke('product:update', { id, data, userId }),
+        delete: (id, userId) => ipcRenderer.invoke('product:delete', { id, userId })
     },
 
     providers: {
         list: () => ipcRenderer.invoke('provider:list'),
         create: (data) => ipcRenderer.invoke('provider:create', data),
-        update: (id, data) => ipcRenderer.invoke('provider:update', { id, data }),
+        update: (id, data, userId) => ipcRenderer.invoke('provider:update', { id, data, userId }),
         getById: (id) => ipcRenderer.invoke('provider:getById', id),
-        delete: (id) => ipcRenderer.invoke('provider:delete', id)
+        delete: (id, userId) => ipcRenderer.invoke('provider:delete', { id, userId })
     },
 
     sale: {
@@ -35,29 +36,35 @@ const api = {
         history: () => ipcRenderer.invoke('sale:history'),
         daily: () => ipcRenderer.invoke('sale:daily'),
         details: (id) => ipcRenderer.invoke('sale:details', id),
-        
-        // 👇 ESTOS SON VITALES PARA LA BOLETA E IMPRESIÓN
-        getById: (id) => ipcRenderer.invoke('sale:getById', id), // Para llenar el HTML
-        savePdf: (id) => ipcRenderer.invoke('sale:save-pdf', id), // Para guardar automático
-        
-        delete: (id) => ipcRenderer.invoke('sale:delete', id)
+        getById: (id) => ipcRenderer.invoke('sale:getById', id),
+        savePdf: (id) => ipcRenderer.invoke('sale:save-pdf', id),
+        delete: (id, userId) => ipcRenderer.invoke('sale:delete', { id, userId })
     },
 
     users: {
-        list: () => ipcRenderer.invoke('user:list'),
+        list: (userId) => ipcRenderer.invoke('user:list', { userId }),
         create: (data) => ipcRenderer.invoke('user:create', data),
-        update: (id, data) => ipcRenderer.invoke('user:update', { id, data }),
-        delete: (id) => ipcRenderer.invoke('user:delete', id)
+        update: (id, data, userId) => ipcRenderer.invoke('user:update', { id, data, userId }),
+        delete: (id, userId) => ipcRenderer.invoke('user:delete', { id, userId })
     },
 
     stats: {
         getDashboard: () => ipcRenderer.invoke('stats:dashboard')
     },
 
+    roles: {
+        list: () => ipcRenderer.invoke('roles:list'),
+        getById: (id) => ipcRenderer.invoke('roles:getById', { id }),
+        create: (data) => ipcRenderer.invoke('roles:create', data),
+        update: (id, data, userId) => ipcRenderer.invoke('roles:update', { id, data, userId }),
+        delete: (id, userId) => ipcRenderer.invoke('roles:delete', { id, userId }),
+        getPermissionsCatalog: (userId) => ipcRenderer.invoke('roles:permissions-catalog', { userId })
+    },
+
     settings: {
         getAll: () => ipcRenderer.invoke('settings:get'),
         save: (data) => ipcRenderer.invoke('settings:save', data),
-        backup: () => ipcRenderer.invoke('settings:backup')
+        backup: (userId) => ipcRenderer.invoke('settings:backup', { userId })
     },
 
     dialog: {

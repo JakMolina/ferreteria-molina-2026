@@ -42,11 +42,11 @@ const getSaleById = async (id) => {
 
 const getSaleDetails = getSaleById;
 
-const deleteSale = async (id, userRole) => {
+const deleteSale = async (id, userId) => {
     try {
-        console.log(`🗑️ Intentando anular venta #${id} por usuario: ${userRole || 'Desconocido'}`);
-        
-        const result = saleService.deleteSale(id, userRole);
+        console.log(`🗑️ Intentando anular venta #${id} por usuario ID: ${userId || 'Desconocido'}`);
+
+        const result = saleService.deleteSale(id, userId);
         return result;
     } catch (error) {
         console.error("❌ Error anulando venta:", error.message);

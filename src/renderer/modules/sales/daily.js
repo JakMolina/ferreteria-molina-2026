@@ -16,7 +16,8 @@ async function loadDailySales() {
     const loader = document.getElementById("loading");
     const totalDisplay = document.getElementById("totalDay");
 
-    const userSession = JSON.parse(sessionStorage.getItem('user')) || { role: 'cashier' };
+    const userSession = JSON.parse(sessionStorage.getItem('user')) || {};
+    const userPermissions = JSON.parse(sessionStorage.getItem('permissions')) || [];
 
     if (!tbody) return;
 
@@ -47,8 +48,8 @@ async function loadDailySales() {
                 hour12: true 
             });
             
-            const deleteButton = userSession.role === 'admin' 
-                ? `<button onclick="deleteSale(${s.id})" class="btn-icon delete" title="Anular (Admin)">🗑️</button>` 
+            const deleteButton = userPermissions.includes('sales.delete')
+                ? `<button onclick="deleteSale(${s.id})" class="btn-icon delete" title="Anular venta">🗑️</button>`
                 : '';
 
             const tr = document.createElement("tr");
@@ -73,15 +74,16 @@ async function loadDailySales() {
 }
 
 window.deleteSale = async (id) => {
+    const userSession = JSON.parse(sessionStorage.getItem('user')) || {};
     const confirmed = await window.api.dialog.confirm(`⚠️ ¿ESTÁS SEGURO?\n\nSe anulará la venta #${id} y el stock regresará al inventario.`);
     if (!confirmed) return;
 
     try {
-        const result = await window.api.sale.delete(id);
-        
+        const result = await window.api.sale.delete(id, userSession.id);
+
         if (result.success) {
             await window.api.dialog.alert("✅ Venta anulada y stock restaurado.", "info");
-            await loadDailySales(); // Recargar tabla
+            await loadDailySales();
         } else {
             await window.api.dialog.alert("Error: " + result.error, "error");
         }

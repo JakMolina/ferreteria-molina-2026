@@ -25,8 +25,8 @@ class SaleRepository {
 
     logInventoryMovement(data) {
         const sql = `
-            INSERT INTO inventory_logs (product_id, change_amount, current_stock_after, reason, reference_id, created_at)
-            VALUES (@product_id, @change_amount, @current_stock_after, @reason, @reference_id, datetime('now', 'localtime'))
+            INSERT INTO inventory_logs (product_id, change_amount, current_stock_after, reason, reference_id, user_id, created_at)
+            VALUES (@product_id, @change_amount, @current_stock_after, @reason, @reference_id, @user_id, datetime('now', 'localtime'))
         `;
         return db.prepare(sql).run(data);
     }

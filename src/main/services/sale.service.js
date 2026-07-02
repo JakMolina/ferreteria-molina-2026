@@ -66,7 +66,8 @@ class SaleService {
                     change_amount: -item.quantity,
                     current_stock_after: finalStock,
                     reason: 'VENTA',
-                    reference_id: saleId
+                    reference_id: saleId,
+                    user_id: saleData.user_id
                 });
             }
 
@@ -88,18 +89,14 @@ class SaleService {
         return saleRepo.getById(id);
     }
 
-    deleteSale(saleId, userRole) {
-        if (userRole && userRole !== 'admin') {
-            throw new Error("⛔ ACCESO DENEGADO: Solo los administradores pueden anular ventas.");
-        }
-
+    deleteSale(saleId, userId) {
         const transaction = db.transaction(() => {
             const sale = saleRepo.getById(saleId);
             if (!sale) throw new Error("Venta no encontrada.");
 
             for (const item of sale.items) {
-                const cantidadADevolver = -item.quantity; 
-                
+                const cantidadADevolver = -item.quantity;
+
                 const finalStock = saleRepo.updateStock(item.product_id, cantidadADevolver);
 
                 saleRepo.logInventoryMovement({
@@ -107,7 +104,8 @@ class SaleService {
                     change_amount: item.quantity,
                     current_stock_after: finalStock,
                     reason: 'ANULACION',
-                    reference_id: saleId
+                    reference_id: saleId,
+                    user_id: userId
                 });
             }
 
