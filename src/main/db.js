@@ -271,13 +271,15 @@ function migrateToV2() {
             db.exec("ALTER TABLE users ADD COLUMN password_hash TEXT");
         }
         if (!userCols.includes('role_id')) {
-            db.exec("ALTER TABLE users ADD COLUMN role_id INTEGER DEFAULT 2");
+            db.exec("ALTER TABLE users ADD COLUMN role_id INTEGER");
+            db.exec("UPDATE users SET role_id = 2 WHERE role_id IS NULL");
         }
         if (!userCols.includes('last_login')) {
             db.exec("ALTER TABLE users ADD COLUMN last_login TEXT");
         }
         if (!userCols.includes('updated_at')) {
-            db.exec("ALTER TABLE users ADD COLUMN updated_at TEXT DEFAULT (datetime('now','localtime'))");
+            db.exec("ALTER TABLE users ADD COLUMN updated_at TEXT");
+            db.exec(`UPDATE users SET updated_at = datetime('now','localtime') WHERE updated_at IS NULL`);
         }
 
         const hasLegacyPassword = userCols.includes('password');
