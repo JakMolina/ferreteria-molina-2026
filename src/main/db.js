@@ -17,9 +17,24 @@ if (app.isPackaged) {
     dbPath = path.join(devDataPath, 'ferreteria_dev.db');
 }
 
-const db = new Database(dbPath, { verbose: console.log });
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
+let db;
+try {
+    db = new Database(dbPath, { verbose: console.log });
+    db.pragma('journal_mode = WAL');
+    db.pragma('foreign_keys = ON');
+} catch (e) {
+    if (e.message && e.message.includes('disk image is malformed')) {
+        console.warn('⚠️ Base de datos corrupta detectada. Regenerando desde cero...');
+        try { fs.unlinkSync(dbPath); } catch (_) {}
+        try { fs.unlinkSync(dbPath + '-wal'); } catch (_) {}
+        try { fs.unlinkSync(dbPath + '-shm'); } catch (_) {}
+        db = new Database(dbPath, { verbose: console.log });
+        db.pragma('journal_mode = WAL');
+        db.pragma('foreign_keys = ON');
+    } else {
+        throw e;
+    }
+}
 
 function initDB() {
     const schema = `
