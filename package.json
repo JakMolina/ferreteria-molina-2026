@@ -18,9 +18,14 @@
     },
     "files": [
       "src/**/*",
-      "package.json",
-      "node_modules/**/*"
+      "assets/**/*",
+      "package.json"
     ],
+    "extraResources": [],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
+    ],
+    "npmRebuild": false,
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"
