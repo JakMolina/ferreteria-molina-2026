@@ -23,17 +23,15 @@ try {
     db.pragma('journal_mode = WAL');
     db.pragma('foreign_keys = ON');
 } catch (e) {
-    if (e.message && e.message.includes('disk image is malformed')) {
-        console.warn('⚠️ Base de datos corrupta detectada. Regenerando desde cero...');
-        try { fs.unlinkSync(dbPath); } catch (_) {}
-        try { fs.unlinkSync(dbPath + '-wal'); } catch (_) {}
-        try { fs.unlinkSync(dbPath + '-shm'); } catch (_) {}
-        db = new Database(dbPath, { verbose: console.log });
-        db.pragma('journal_mode = WAL');
-        db.pragma('foreign_keys = ON');
-    } else {
-        throw e;
-    }
+    console.warn('⚠️ Error al abrir base de datos:', e.message);
+    console.warn('⚠️ Regenerando base de datos desde cero...');
+    try { fs.unlinkSync(dbPath); } catch (_) {}
+    try { fs.unlinkSync(dbPath + '-wal'); } catch (_) {}
+    try { fs.unlinkSync(dbPath + '-shm'); } catch (_) {}
+    try { fs.unlinkSync(dbPath + '-journal'); } catch (_) {}
+    db = new Database(dbPath, { verbose: console.log });
+    db.pragma('journal_mode = WAL');
+    db.pragma('foreign_keys = ON');
 }
 
 function initDB() {
