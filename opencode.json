@@ -1,0 +1,44 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (Local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen2.5-coder": { "name": "Qwen 2.5 Coder" }
+      }
+    },
+    "google": {
+      "npm": "@ai-sdk/google",
+      "name": "Google Vertex/AI Studio",
+      "options": { 
+        "apiKey": "tuapiaca" 
+      },
+      "models": { 
+        "gemini-1.5-pro-latest": { "name": "Gemini 1.5 Pro (Nube)" } 
+      }
+    },
+    "nvidia": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "NVIDIA NIM",
+      "options": {
+        "baseURL": "https://integrate.api.nvidia.com/v1",
+        "apiKey": "tu nvidia api aca"
+      },
+      "models": {
+        "deepseek-ai/deepseek-v4-pro": { 
+          "name": "DeepSeek V4 Pro (Programación Avanzada)" 
+        },
+        "nvidia/nemotron-3-ultra-550b-a55b": { 
+          "name": "Nemotron 3 Ultra (Razonamiento Masivo)" 
+        },
+        "meta/llama-3.1-70b-instruct": { 
+          "name": "Llama 3.1 70B (Lógica General)" 
+        }
+      }
+    }
+  }
+}

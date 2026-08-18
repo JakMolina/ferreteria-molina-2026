@@ -1,0 +1,88 @@
+graph TB
+    subgraph "Renderer Process - src/renderer/"
+        AuthUI["Auth: login.html + login.js"]
+        HomeUI["Home: index.html + index.js"]
+        ProductsUI["Products: form.html/list.html + form.js/list.js"]
+        ProvidersUI["Providers: form.html/list.html + form.js/list.js"]
+        SalesUI["Sales: pos.html/daily.html/history.html"]
+        UsersUI["Users: form.html/list.html/roles.html"]
+        SettingsUI["Settings: settings.html"]
+        Receipts["Receipts: invoice.html"]
+        Styles["Styles: style.css"]
+    end
+
+    subgraph "Preload Bridge"
+        Preload["preload.js: contextBridge.exposeInMainWorld('api',{...})"]
+    end
+
+    subgraph "Main Process - src/main/"
+        subgraph "IPC Layer"
+            IPC["ipc.js: ipcMain.handle() + hasPermission()"]
+        end
+
+        subgraph "Controllers"
+            AuthCtrl["auth.controller.js"]
+            ProductCtrl["product.controller.js"]
+            SalesCtrl["sales.controller.js"]
+            ProviderCtrl["provider.controller.js"]
+            UserCtrl["user.controller.js"]
+            SettingsCtrl["settings.controller.js"]
+            StatsCtrl["stats.controller.js"]
+            PDFCtrl["pdf.controller.js"]
+            RolesCtrl["roles.controller.js"]
+        end
+
+        subgraph "Services"
+            ProductSvc["product.service.js"]
+            SaleSvc["sale.service.js"]
+            StatsSvc["stats.service.js"]
+        end
+
+        subgraph "Repositories"
+            ProductRepo["product.repository.js"]
+            SaleRepo["sale.repository.js"]
+            StatsRepo["stats.repository.js"]
+        end
+
+        subgraph "Database"
+            SQLite[(SQLite: better-sqlite3)]
+        end
+    end
+
+    AuthUI --> Bridge
+    HomeUI --> Bridge
+    ProductsUI --> Bridge
+    ProvidersUI --> Bridge
+    SalesUI --> Bridge
+    UsersUI --> Bridge
+    SettingsUI --> Bridge
+
+    Bridge --> IPC
+
+    IPC --> AuthCtrl
+    IPC --> ProductCtrl
+    IPC --> SalesCtrl
+    IPC --> ProviderCtrl
+    IPC --> UserCtrl
+    IPC --> SettingsCtrl
+    IPC --> StatsCtrl
+    IPC --> PDFCtrl
+    IPC --> RolesCtrl
+
+    ProductCtrl --> ProductSvc
+    SalesCtrl --> SaleSvc
+    StatsCtrl --> StatsSvc
+
+    ProductSvc --> ProductRepo
+    SaleSvc --> SaleRepo
+    StatsSvc --> StatsRepo
+
+    ProductRepo --> SQLite
+    SaleRepo --> SQLite
+    StatsRepo --> SQLite
+
+    AuthCtrl --> SQLite
+    ProviderCtrl --> SQLite
+    UserCtrl --> SQLite
+    SettingsCtrl --> SQLite
+    RolesCtrl --> SQLite

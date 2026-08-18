@@ -1,0 +1,63 @@
+sequenceDiagram
+    actor Cajero
+    participant UI as Renderer UI
+    participant PL as Preload
+    participant IPC as IPC Handlers
+    participant AuthCtrl as AuthController
+    participant SaleSvc as SaleService
+    participant DB as SQLite
+
+    Note over Cajero,DB: 🔐 LOGIN
+    Cajero->>UI: pedro_molina / pedro123
+    UI->>PL: api.auth.login({username, password})
+    PL->>IPC: ipcRenderer.invoke('login', creds)
+    IPC->>AuthCtrl: login(creds)
+    AuthCtrl->>DB: SELECT * FROM users WHERE username=? AND is_active=1
+    DB-->>AuthCtrl: user (password_hash, role_id)
+    AuthCtrl->>AuthCtrl: bcrypt.compare(password, hash)
+    AuthCtrl->>DB: SELECT codename FROM role_permissions WHERE role_id=?
+    DB-->>AuthCtrl: [dashboard.view, products.read, sales.pos, ...]
+    AuthCtrl-->>IPC: {success, user: {id, name, role_id, permissions}}
+    IPC-->>PL: result
+    PL-->>UI: result
+    UI->>UI: sessionStorage: user + permissions
+
+    Note over Cajero,DB: VENTA (POS)
+    Cajero->>UI: Selecciona productos
+    UI->>PL: api.sale.create(items, payment, client, user_id)
+    PL->>IPC: ipcRenderer.invoke('sale:create', data)
+    IPC->>IPC: hasPermission(user_id, 'sales.pos')
+    IPC->>SaleSvc: createSale(data)
+    SaleSvc->>DB: BEGIN TRANSACTION
+    SaleSvc->>DB: INSERT INTO sales (invoice_number, total, user_id)
+    loop Por cada item
+        SaleSvc->>DB: SELECT stock FROM products WHERE id=?
+        SaleSvc->>SaleSvc: Validar stock >= quantity
+        SaleSvc->>DB: INSERT INTO sale_items (...)
+        SaleSvc->>DB: UPDATE products SET stock = stock - quantity
+        SaleSvc->>DB: INSERT INTO inventory_logs (change_amount, user_id)
+    end
+    SaleSvc-->>DB: COMMIT
+    SaleSvc-->>IPC: {success, saleId, invoiceNumber, total}
+    IPC-->>PL: result
+    PL-->>UI: result
+    UI->>UI: Mostrar comprobante
+
+    Note over Cajero,DB: ANULACION DE VENTA
+    Cajero->>UI: Botón Anular
+    UI->>PL: api.sale.delete(id, userId)
+    PL->>IPC: ipcRenderer.invoke('sale:delete', {id, userId})
+    IPC->>IPC: hasPermission(userId, 'sales.delete')
+    alt Tiene permiso sales.delete
+        IPC->>SaleSvc: deleteSale(id, userId)
+        SaleSvc->>DB: SELECT * FROM sale_items WHERE sale_id=?
+        SaleSvc->>DB: DELETE FROM sales WHERE id=?
+        loop Por cada item devuelto
+            SaleSvc->>DB: UPDATE products SET stock = stock + quantity
+            SaleSvc->>DB: INSERT INTO inventory_logs (ANULACION, user_id)
+        end
+        SaleSvc-->>IPC: {success, message}
+        IPC-->>UI: Venta anulada y stock devuelto
+    else Sin permiso
+        IPC-->>UI: ACCESO DENEGADO
+    end
